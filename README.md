@@ -4,7 +4,7 @@ This program allows you to download YouTube videos files that are archived on Wa
 
 Usage: 
 ``` 
-python3 yad.py *your link*
+python3 yad.py *your link* ⏎
 (for example: python3 yad.py https://web.archive.org/web/20180214215840/https://www.youtube.com/watch?v=aqz-KE-bpKQ)
 ```
 or

@@ -2,7 +2,7 @@ import re,requests,sys,time,threading
 from os import mkdir,listdir
 
 if len(sys.argv) < 2  :
-	link = input("Enter the Deleted Youtbe video link: ")
+	link = input("Enter the Archived Youtube video link: ")
 elif len(sys.argv) > 2 and sys.argv[2] == "--help" or "\h":
 	print("""Youtube Archive Downloader by https://github.com/fsalamic
 This program allows you to download YouTube videos files
