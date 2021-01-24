@@ -37,6 +37,8 @@ def checker_web():
 	response = str(h.status_code)
 	if response == "302":
 		time.sleep(10)
+	elif response == "404":
+		exit()
 	text = requests.head(h2)
 	#print (text)
 	type = text.headers.get('content-type')

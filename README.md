@@ -5,12 +5,12 @@ This program allows you to download YouTube videos files that are archived on Wa
 Usage: 
 ``` 
 python3 yad.py *your link* ⏎
-(for example: python3 yad.py https://web.archive.org/web/20180214215840/https://www.youtube.com/watch?v=aqz-KE-bpKQ)
+(for example: python3 yad.py http://web.archive.org/web/20070126081752/http://www.youtube.com/watch?v=jNQXAC9IVRw)
 ```
 or
 ```
 python3 yad.py
-Enter the Archived Youtube video link: https://web.archive.org/web/20180214215840/https://www.youtube.com/watch?v=aqz-KE-bpKQ ⏎
+Enter the Archived Youtube video link: http://web.archive.org/web/20070126081752/http://www.youtube.com/watch?v=jNQXAC9IVRw ⏎
 ```
 Features:
 - The program downloads the video file as the video id into the folder called "downloads"
