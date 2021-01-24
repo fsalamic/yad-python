@@ -1,31 +1,30 @@
-import re,requests,sys,time,threading
-from os import mkdir,listdir
+import re, requests, sys, time, threading, argparse
+from os import mkdir, listdir
 
-if len(sys.argv) < 2  :
-	link = input("Enter the Archived Youtube video link: ")
-elif len(sys.argv) > 2 and sys.argv[2] == "--help" or "\h":
-	print("""Youtube Archive Downloader by https://github.com/fsalamic
-This program allows you to download YouTube videos files
-that are archived on Wayback Machine from Archive.org.
-
-Usage: python3 yad.py *archived youtube video link*
-
-or
-
-python3 yad.py 
-Enter the Deleted Youtbe video link: *archived youtube video link*
-
-To show this help page python3 yad.py --help or python3 yad.py \h
-""")
-	exit()
-else:
-	link = str(sys.argv[1])
+parser = argparse.ArgumentParser(description='This program allows you to download YouTube videos files that are archived on Wayback Machine from Archive.org.')
+parser.add_argument('link', metavar='link', type=str, action='store', default='',
+                    help='enter a link for the youtube video you would like to archive (it could be from youtube or from wayback machine)')
 
 print ('YouTube Archive Downloader')
+#print(len(sys.argv))
 
-video_id = re.sub(".*\?v=","",link)
+def link_check():
+	if len(sys.argv) < 2:
+		link = input(str("Enter the Archived Youtube video link: "))
+		return link
+		print(len(sys.argv))
+	else:
+		args = parser.parse_args()
+		link = str(args.link)
+		return link
+
+videolink = str(link_check())
+#video_id = re.search('v=(.*)|&|yt/(.*)', videolink)[1]
+video_id = re.sub(".*\?v=" , "", videolink)
 download_url = ("https://web.archive.org/web/2oe_/http://wayback-fakeurl.archive.org/yt/"+video_id)
 folderexists = 0
+
+#print(link_check())
 if 'downloads' in (listdir()):
 	folderexists += 1
 else:
@@ -33,7 +32,17 @@ else:
 	folderexists += 1
 
 def checker_web():
-	r = requests.get(download_url,timeout=3)
+	h = requests.head(download_url)
+	h2 = h.headers.get('location')
+	response = str(h.status_code)
+	if response == "302":
+		time.sleep(10)
+	text = requests.head(h2)
+	#print (text)
+	type = text.headers.get('content-type')
+	type2 = re.sub(".*\/" , "", str(type))
+
+	return str(type2)
 	exit()
 
 if folderexists == 1:
@@ -45,7 +54,11 @@ if folderexists == 1:
 	if checker.is_alive() :
 		print("Video found!\nDownloading... (Please be patient, this could take a while)")
 		download = requests.get(download_url)
-		open('downloads/' + video_id + '.mp4', 'wb').write(download.content)
+		vid_type = str(checker_web())
+		filepath = 'downloads/'+ video_id + ('.'+vid_type or '.mp4')
+		open(filepath, 'wb').write(download.content)
+		#with open(filepath, 'w') as file:
+    		#	file.write(download.content)
 		print ("Video downloaded.")
 	else:
 		print ("Video not found.\n")
