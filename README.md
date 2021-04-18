@@ -23,5 +23,5 @@ How to Install:
 ```
 git clone https://github.com/fsalamic/yad-python.git
 cd yad-python
-pip3 install -u requirements.txt
+pip3 install -r requirements.txt
 ```
